@@ -15,10 +15,10 @@ def get_since_parameter(days = 7):
 	dt_now = datetime.datetime.now()
 	dt_now_unix = time.mktime(dt_now.timetuple())
 
-	print 'obtenido con datetime y mktime: ' + str(int(dt_now_unix))
+	# print 'obtenido con datetime y mktime: ' + str(int(dt_now_unix))
 
 	t_unix = time.time()
-	print 'obtenido con time.time() nomas: ' + str(int(t_unix))
+	# print 'obtenido con time.time() nomas: ' + str(int(t_unix))
 
 	# delta = datetime.timedelta(days = 30)
 	delta = datetime.timedelta(days)
@@ -41,67 +41,67 @@ def get_post_data(post):
 
 	try:
 		if "type" in post.keys():
-			print 'type: ' + post['type']
+			# print 'type: ' + post['type']
 		else:
-			print "NO TIENE type"
+			# print "NO TIENE type"
 		#################################################################################################################
 		if "created_time" in post.keys():
-			print 'created_time: ' + post['created_time']
+			# print 'created_time: ' + post['created_time']
 		else:
-			print "NO TIENE created_time"
+			# print "NO TIENE created_time"
 		#################################################################################################################
 		if "name" in post.keys():
-			print 'name: ' + post['name'].encode('utf-8')
+			# print 'name: ' + post['name'].encode('utf-8')
 			text = text + post['name'].encode('utf-8')
 		else:
-			print "NO TIENE name"
+			# print "NO TIENE name"
 		#################################################################################################################
 		if "message" in post.keys():
-			print "message: " + post['message'].encode('utf-8').replace('\n',' ').replace('\r',' ').replace('\t','')
+			# print "message: " + post['message'].encode('utf-8').replace('\n',' ').replace('\r',' ').replace('\t','')
 			text = text + ' ' + post['message'].encode('utf-8').replace('\n',' ').replace('\r',' ').replace('\t','')
 		else:
-			print "NO TIENE message"
+			# print "NO TIENE message"
 		#################################################################################################################
 		if "link" in post.keys():
-			print 'link: ' + post['link']
+			# print 'link: ' + post['link']
 		else:
-			print "NO TIENE link"
+			# print "NO TIENE link"
 		#################################################################################################################
 		if "shares" in post.keys():
-			print 'shares: ' + str(post['shares']['count'])
+			# print 'shares: ' + str(post['shares']['count'])
 			shares = post['shares']['count']
 		else:
-			print "NO TIENE shares"
+			# print "NO TIENE shares"
 		#################################################################################################################
 		if "likes" in post.keys():
-			print 'likes: ' + str(post['likes']['summary']['total_count'])
+			# print 'likes: ' + str(post['likes']['summary']['total_count'])
 			likes = post['likes']['summary']['total_count']
 		else:
-			print "NO TIENE likes"
+			# print "NO TIENE likes"
 		#################################################################################################################
 		if "comments" in post.keys():
-			print 'comments: ' + str(post['comments']['summary']['total_count'])
+			# print 'comments: ' + str(post['comments']['summary']['total_count'])
 			comments = post['comments']['summary']['total_count']
 		else:
-			print "NO TIENE comments"
+			# print "NO TIENE comments"
 		#################################################################################################################
 		if "description" in post.keys():
-			print 'description: ' + post['description'].encode('utf-8').replace('\n',' ').replace('\r',' ').replace('\t','')
+			# print 'description: ' + post['description'].encode('utf-8').replace('\n',' ').replace('\r',' ').replace('\t','')
 			text = text + post['description'].encode('utf-8').replace('\n',' ').replace('\r',' ').replace('\t','')
 		else:
-			print "NO TIENE description"
+			# print "NO TIENE description"
 		#################################################################################################################
 		# if "from" in post.keys():
-		# 	print 'from: ' + str(post['from']['name'])
+			# print 'from: ' + str(post['from']['name'])
 		# else:
-		# 	print "NO TIENE from"
+			# print "NO TIENE from"
 		#################################################################################################################
 		if "id" in post.keys():
-			print 'id: ' + str(post['id'])
+			# print 'id: ' + str(post['id'])
 			url = "www.facebook.com/" + str(post["id"])
-			print url
+			# print url
 		else:
-			print "NO TIENE id"
+			# print "NO TIENE id"
 
 		print ' ----------------------------------------------------------------------------------------------------- '
 
@@ -134,12 +134,12 @@ def get_facebook_posts():
 	graph = facebook.GraphAPI(facebook_access_token)
 	output_file = open("FacebookResults.csv", "wb")
 	writer = csv.writer(output_file)
-	writer.writerow(["text", "url", "likes", "shares","comments"])
+	writer.writerow(["source", "text", "url", "likes", "shares","comments"])
 
 
 	for source, page_id in facebook_sources.iteritems():
 		profile = graph.get_object(page_id)
-		posts = graph.get_connections(profile['id'], 'posts', fields="type, name, from, shares, created_time, link, message, description, caption, likes.limit(0).summary(True), comments.limit(0).summary(True)", since=get_since_parameter(days=30))
+		posts = graph.get_connections(profile['id'], 'posts', fields="type, name, from, shares, created_time, link, message, description, caption, likes.limit(0).summary(True), comments.limit(0).summary(True)", since=get_since_parameter(days=7))
 		
 		while True:
 			try:
@@ -194,6 +194,6 @@ def debug_failed():
 
 
 if __name__ == "__main__":
-	# get_facebook_posts()
-	debug_failed()
+	get_facebook_posts()
+	# debug_failed()
 
