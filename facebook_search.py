@@ -7,9 +7,6 @@ import csv
 from configuration_file import facebook_sources, facebook_access_token
 
 
-# facebook_sources = {'ABC Color': '280037675322', 'Ultima Hora': '48880688722', 'La Nacion': '132554373464255', 'Cronica': '221252151293397', "E'a": '145406955472712', '5 dias': '182736288436188', 'Paraguay.com': '208363944335', 'Ejempla': '726622947351359', 'Extra': '303614086512550', 'Vanguardia': '313024308746037'}
-
-
 def get_since_parameter(days = 7):
 
 	dt_now = datetime.datetime.now()
@@ -42,54 +39,66 @@ def get_post_data(post):
 	try:
 		if "type" in post.keys():
 			# print 'type: ' + post['type']
+			pass
 		else:
 			# print "NO TIENE type"
+			pass
 		#################################################################################################################
 		if "created_time" in post.keys():
 			# print 'created_time: ' + post['created_time']
+			pass
 		else:
 			# print "NO TIENE created_time"
+			pass
 		#################################################################################################################
 		if "name" in post.keys():
 			# print 'name: ' + post['name'].encode('utf-8')
 			text = text + post['name'].encode('utf-8')
 		else:
 			# print "NO TIENE name"
+			pass
 		#################################################################################################################
 		if "message" in post.keys():
 			# print "message: " + post['message'].encode('utf-8').replace('\n',' ').replace('\r',' ').replace('\t','')
 			text = text + ' ' + post['message'].encode('utf-8').replace('\n',' ').replace('\r',' ').replace('\t','')
 		else:
 			# print "NO TIENE message"
+			pass
 		#################################################################################################################
 		if "link" in post.keys():
 			# print 'link: ' + post['link']
+			pass
 		else:
 			# print "NO TIENE link"
+			pass
 		#################################################################################################################
 		if "shares" in post.keys():
 			# print 'shares: ' + str(post['shares']['count'])
 			shares = post['shares']['count']
 		else:
 			# print "NO TIENE shares"
+			pass
 		#################################################################################################################
 		if "likes" in post.keys():
 			# print 'likes: ' + str(post['likes']['summary']['total_count'])
 			likes = post['likes']['summary']['total_count']
 		else:
 			# print "NO TIENE likes"
+			pass
 		#################################################################################################################
 		if "comments" in post.keys():
 			# print 'comments: ' + str(post['comments']['summary']['total_count'])
 			comments = post['comments']['summary']['total_count']
 		else:
 			# print "NO TIENE comments"
+			pass
 		#################################################################################################################
 		if "description" in post.keys():
 			# print 'description: ' + post['description'].encode('utf-8').replace('\n',' ').replace('\r',' ').replace('\t','')
 			text = text + post['description'].encode('utf-8').replace('\n',' ').replace('\r',' ').replace('\t','')
 		else:
 			# print "NO TIENE description"
+			pass
 		#################################################################################################################
 		# if "from" in post.keys():
 			# print 'from: ' + str(post['from']['name'])
@@ -102,6 +111,7 @@ def get_post_data(post):
 			# print url
 		else:
 			# print "NO TIENE id"
+			pass
 
 		print ' ----------------------------------------------------------------------------------------------------- '
 
@@ -139,7 +149,7 @@ def get_facebook_posts():
 
 	for source, page_id in facebook_sources.iteritems():
 		profile = graph.get_object(page_id)
-		posts = graph.get_connections(profile['id'], 'posts', fields="type, name, from, shares, created_time, link, message, description, caption, likes.limit(0).summary(True), comments.limit(0).summary(True)", since=get_since_parameter(days=7))
+		posts = graph.get_connections(profile['id'], 'posts', fields="type, name, from, shares, created_time, link, message, description, caption, likes.limit(0).summary(True), comments.limit(0).summary(True)", since=get_since_parameter(days=30))
 		
 		while True:
 			try:
@@ -173,7 +183,7 @@ def get_facebook_posts():
 
 	output_file.close()
 	end_time = start_time = datetime.datetime.now()
-	elapsed_time = end_time = start_time
+	elapsed_time = end_time - start_time
 	# print contador
 	print '>>> RESULTADOS <<<'
 	total = 0
