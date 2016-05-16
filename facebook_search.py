@@ -35,6 +35,7 @@ def get_post_data(post):
 	shares = 0
 	comments = 0
 	url = ''
+	created_time = 0
 
 	try:
 		if "type" in post.keys():
@@ -46,7 +47,8 @@ def get_post_data(post):
 		#################################################################################################################
 		if "created_time" in post.keys():
 			# print 'created_time: ' + post['created_time']
-			pass
+			created_time = str(post['created_time'])
+			# pass
 		else:
 			# print "NO TIENE created_time"
 			pass
@@ -125,7 +127,7 @@ def get_post_data(post):
 		# elif post['type'] == "status":
 		# 	return None
 		# #################################################################################################################
-		return ({"text": text, "url": url, "likes": likes, "shares": shares, "comments": comments})
+		return ({"text": text, "url": url, "likes": likes, "shares": shares, "comments": comments, 'created_time': created_time})
 
 	except Exception, e:
 		print str(e)
@@ -135,7 +137,7 @@ def get_post_data(post):
 
 def save_post_data(data, source, writer):
 	if data != None:
-			writer.writerow([source, data["text"], data["url"], data["likes"], data["shares"], data["comments"]])
+			writer.writerow([source, data['created_time'] ,data["text"], data["url"], data["likes"], data["shares"], data["comments"]])
 
 def get_facebook_posts():
 	start_time = datetime.datetime.now()
@@ -144,12 +146,12 @@ def get_facebook_posts():
 	graph = facebook.GraphAPI(facebook_access_token)
 	output_file = open("FacebookResults.csv", "wb")
 	writer = csv.writer(output_file)
-	writer.writerow(["source", "text", "url", "likes", "shares","comments"])
+	writer.writerow(["source", "created_time", "text", "url", "likes", "shares","comments"])
 
 
 	for source, page_id in facebook_sources.iteritems():
 		profile = graph.get_object(page_id)
-		posts = graph.get_connections(profile['id'], 'posts', fields="type, name, from, shares, created_time, link, message, description, caption, likes.limit(0).summary(True), comments.limit(0).summary(True)", since=get_since_parameter(days=30))
+		posts = graph.get_connections(profile['id'], 'posts', fields="type, name, from, shares, created_time, link, message, description, caption, likes.limit(0).summary(True), comments.limit(0).summary(True)", since=get_since_parameter(days=365), limit=100)
 		
 		while True:
 			try:
@@ -182,7 +184,7 @@ def get_facebook_posts():
 				break
 
 	output_file.close()
-	end_time = start_time = datetime.datetime.now()
+	end_time = datetime.datetime.now()
 	elapsed_time = end_time - start_time
 	# print contador
 	print '>>> RESULTADOS <<<'
