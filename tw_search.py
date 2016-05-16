@@ -20,7 +20,7 @@ def get_num_comments(url_tweet):
 		if statusCode == 200:
 			# Pasamos el contenido HTML de la web a un objeto BeautifulSoup()
 			t0 = datetime.datetime.now()
-			html = BeautifulSoup(req.text, 'html.parser')
+			html = BeautifulSoup(req.text, 'lxml')
 			# Obtenemos todos los divs donde estan las entradas
 			t1 = datetime.datetime.now()
 			print 'el tiempo del soup es ' + str(t1- t0)
@@ -68,12 +68,12 @@ def get_twitter_tweets():
 		while(True):
 			if(ban == 1):
 				break
-
+			t0 = datetime.datetime.now()
 			if(max_id == -1):
 				timeline = api.user_timeline(user_id=page_id, count = 190)
 			else:
 				timeline = api.user_timeline(user_id=page_id, count = 190, max_id= max_id)
-
+			print 'tiepo de respuesta de la api ' + str(datetime.datetime.now() - t0)
 			count_180 = count_180 + 1
 			sys.stderr.write(str(count_180))
 			print ("\nFuente: " + str(page_id))

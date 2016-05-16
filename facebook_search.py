@@ -4,7 +4,7 @@ import datetime
 import requests
 import csv
 
-from configuration_file import facebook_sources, facebook_access_token
+from configuration_file import facebook_sources, facebook_access_token, days
 
 
 def get_since_parameter(days = 7):
@@ -144,34 +144,37 @@ def get_facebook_posts():
 	posts_counter = {} # a dict that counts how many post of each kind are found
 	api_calls_counter = 1 # a counter who keep tracks of how many calls to tha api have benn done
 	graph = facebook.GraphAPI(facebook_access_token)
-	output_file = open("FacebookResults.csv", "wb")
-	writer = csv.writer(output_file)
-	writer.writerow(["source", "created_time", "text", "url", "likes", "shares","comments"])
+	# output_file = open("FacebookResults" + str(datetime.datetime.now()).replace(":", "_") + ".csv", "wb")
+	# writer = csv.writer(output_file)
+	# writer.writerow(["source", "created_time", "text", "url", "likes", "shares","comments"])
 
 
 	for source, page_id in facebook_sources.iteritems():
-		profile = graph.get_object(page_id)
-		posts = graph.get_connections(profile['id'], 'posts', fields="type, name, from, shares, created_time, link, message, description, caption, likes.limit(0).summary(True), comments.limit(0).summary(True)", since=get_since_parameter(days=365), limit=100)
+		output_file = open("FacebookResults_" + source  + '_(' + str(days) + ' dias)_' + str(datetime.datetime.now()).replace(":", "_") + ".csv", "wb")
+		writer = csv.writer(output_file)
+		writer.writerow(["source", "created_time", "text", "url", "likes", "shares","comments"])
+		# profile = graph.get_object(page_id)
+		posts = graph.get_connections(page_id, 'posts', fields="type, name, from, shares, created_time, link, message, description, caption, likes.limit(0).summary(True), comments.limit(0).summary(True)", since=get_since_parameter(days), limit=100)
 		
 		while True:
 			try:
 				for post in posts['data']:
-					# try:
-					# 	data = get_post_data(post)
-					# 	save_post_data(data, source, writer)
-					# 	if post['type'] not in contador.keys():
-					# 		posts_counter[post['type']] = 1
-					# 	else:
-					# 		posts_counter[post['type']] = posts_counter[post['type']] + 1
-					# except:
-					# 	print 'FALTA ALGUNO DE ESOS CAMPOS: ' + str(post)
+					try:
+						data = get_post_data(post)
+						save_post_data(data, source, writer)
+						if post['type'] not in posts_counter.keys():
+							posts_counter[post['type']] = 1
+						else:
+							posts_counter[post['type']] = posts_counter[post['type']] + 1
+					except Exception, e:
+						print str(e)
 					
-					data = get_post_data(post)
-					save_post_data(data, source, writer)
-					if post['type'] not in posts_counter.keys():
-						posts_counter[post['type']] = 1
-					else:
-						posts_counter[post['type']] = posts_counter[post['type']] + 1
+					# data = get_post_data(post)
+					# save_post_data(data, source, writer)
+					# if post['type'] not in posts_counter.keys():
+					# 	posts_counter[post['type']] = 1
+					# else:
+					# 	posts_counter[post['type']] = posts_counter[post['type']] + 1
 			
 				
 				time.sleep(5)
@@ -182,8 +185,8 @@ def get_facebook_posts():
 				# When there are no more pages (['paging']['next']), break from the
 				# loop and end the script.
 				break
-
-	output_file.close()
+		output_file.close()
+	# output_file.close()
 	end_time = datetime.datetime.now()
 	elapsed_time = end_time - start_time
 	# print contador
