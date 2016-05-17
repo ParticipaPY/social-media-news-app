@@ -9,7 +9,7 @@ import urllib
 from tweepy import StreamListener
 from tweepy import OAuthHandler
 from tweepy import Stream
-from bs4 import BeautifulSoup
+# from bs4 import BeautifulSoup
 from configuration_file import tw_access_token, tw_access_secret, tw_consumer_key, tw_consumer_secret, tw_sources
 from lxml import html
 
@@ -41,7 +41,6 @@ from lxml import html
 # 		return 0
 
 def get_num_comments(url_tweet):
-<<<<<<< HEAD
     try:
         page = requests.get(url_tweet)
         doc = html.fromstring(page.content)
@@ -49,32 +48,6 @@ def get_num_comments(url_tweet):
         return len(replies_list)
     except Exception:
         return 0
-=======
-	try:
-		req = requests.get(url_tweet)
-		# Comprobamos que la peticion nos devuelve un Status Code = 200
-		statusCode = req.status_code
-
-		if statusCode == 200:
-			# Pasamos el contenido HTML de la web a un objeto BeautifulSoup()
-			t0 = datetime.datetime.now()
-			html = BeautifulSoup(req.text, 'lxml')
-			# Obtenemos todos los divs donde estan las entradas
-			t1 = datetime.datetime.now()
-			print 'el tiempo del soup es ' + str(t1- t0)
-			entradas     = html.find('ol',{'id':'stream-items-id'})
-			t2 = datetime.datetime.now()
-			print 'el tiempo de find es ' + str(t2-t1)
-			replies_list = entradas.find_all('li', {'class' : 'js-stream-item stream-item stream-item expanding-stream-item\n'})
-			t3 = datetime.datetime.now()
-			print 'el tiempo del find all es ' + str(t3-t2)
-
-			return len(replies_list)		
-		else:
-			return 0	
-	except:
-		return 0
->>>>>>> d76826ab0ca04d10ac7393a04fcfa4cadb79941e
 	
 
 def get_tweet_data(tweet, url):
