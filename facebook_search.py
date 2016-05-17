@@ -115,7 +115,7 @@ def get_post_data(post):
 			# print "NO TIENE id"
 			pass
 
-		print ' ----------------------------------------------------------------------------------------------------- '
+		# print ' ----------------------------------------------------------------------------------------------------- '
 
 		# #################################################################################################################
 		# if post['type'] == "link":
@@ -137,6 +137,7 @@ def get_post_data(post):
 
 def save_post_data(data, source, writer):
 	if data != None:
+			print source
 			writer.writerow([source, data['created_time'] ,data["text"], data["url"], data["likes"], data["shares"], data["comments"]])
 
 def get_facebook_posts():
@@ -177,7 +178,7 @@ def get_facebook_posts():
 					# 	posts_counter[post['type']] = posts_counter[post['type']] + 1
 			
 				
-				time.sleep(5)
+				time.sleep(2)
 				posts = requests.get(posts['paging']['next']).json()
 				api_calls_counter = api_calls_counter + 1
 
