@@ -6,9 +6,10 @@ import csv
 
 from configuration_file import facebook_sources, facebook_access_token, days
 
-
+# ___________________________________________________________________________________________________________________________________________________________
+# Returns the 'since' date as a unix timestamp (seconds since epoch). Needed for the facebook api parameter to know what's the date lower bound of search
 def get_since_parameter(days = 7):
-
+	# get current timestamp as a python datetime object
 	dt_now = datetime.datetime.now()
 	dt_now_unix = time.mktime(dt_now.timetuple())
 
@@ -18,18 +19,28 @@ def get_since_parameter(days = 7):
 	# print 'obtenido con time.time() nomas: ' + str(int(t_unix))
 
 	# delta = datetime.timedelta(days = 30)
+	# Converts de number of days in a python timedelta object
 	delta = datetime.timedelta(days)
 	print 'diferencia de tiempo = ' + str(delta)
 
+	# Substracts the difference from the current timestamp to calculate the 'since' date
 	dt_since = dt_now - delta
+	# Converts de 'since' date (now a python datetime object) in a unix timestamp
 	dt_since_unix = time.mktime(dt_since.timetuple())
 	print "La valor de since para " + str(dt_since) + ' en unix es = ' + str(int(dt_since_unix))
 	print "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 
 	return int(dt_since_unix)
 
-
+# _________________________________________________________________________________________________________________________
+# returns the required information of a single post as a dictionary withe the following fields:
+#		- text: the text of the post, concatenation of the name and/or message and/or description
+#		- created_time: a string representing the date-time of creation of the post
+#		- likes: the number of likes to that post
+#		- shares: a number representing the times that the post has been shared
+#		- comments: the count of comments on that post
 def get_post_data(post):
+	#initial values for return
 	text = ''
 	likes = 0
 	shares = 0
@@ -38,6 +49,7 @@ def get_post_data(post):
 	created_time = 0
 
 	try:
+		# each 'if' verifies if a given field exists in the post (fields differs depending on the post's type)
 		if "type" in post.keys():
 			# print 'type: ' + post['type']
 			pass
@@ -45,6 +57,7 @@ def get_post_data(post):
 			# print "NO TIENE type"
 			pass
 		#################################################################################################################
+		# date and time of creation of the post
 		if "created_time" in post.keys():
 			# print 'created_time: ' + post['created_time']
 			created_time = str(post['created_time'])
@@ -53,6 +66,7 @@ def get_post_data(post):
 			# print "NO TIENE created_time"
 			pass
 		#################################################################################################################
+		# a part of the 'text' return value
 		if "name" in post.keys():
 			# print 'name: ' + post['name'].encode('utf-8')
 			text = text + post['name'].encode('utf-8')
@@ -60,6 +74,7 @@ def get_post_data(post):
 			# print "NO TIENE name"
 			pass
 		#################################################################################################################
+		# a part of the 'text' return value
 		if "message" in post.keys():
 			# print "message: " + post['message'].encode('utf-8').replace('\n',' ').replace('\r',' ').replace('\t','')
 			text = text + ' ' + post['message'].encode('utf-8').replace('\n',' ').replace('\r',' ').replace('\t','')
@@ -67,6 +82,7 @@ def get_post_data(post):
 			# print "NO TIENE message"
 			pass
 		#################################################################################################################
+		# link inserted on 'link'-type posts. Currently unused
 		if "link" in post.keys():
 			# print 'link: ' + post['link']
 			pass
@@ -74,6 +90,7 @@ def get_post_data(post):
 			# print "NO TIENE link"
 			pass
 		#################################################################################################################
+		# 'shares' return value
 		if "shares" in post.keys():
 			# print 'shares: ' + str(post['shares']['count'])
 			shares = post['shares']['count']
@@ -81,6 +98,7 @@ def get_post_data(post):
 			# print "NO TIENE shares"
 			pass
 		#################################################################################################################
+		# 'likes' return value
 		if "likes" in post.keys():
 			# print 'likes: ' + str(post['likes']['summary']['total_count'])
 			likes = post['likes']['summary']['total_count']
@@ -88,6 +106,7 @@ def get_post_data(post):
 			# print "NO TIENE likes"
 			pass
 		#################################################################################################################
+		# 'comments' return value
 		if "comments" in post.keys():
 			# print 'comments: ' + str(post['comments']['summary']['total_count'])
 			comments = post['comments']['summary']['total_count']
@@ -95,6 +114,7 @@ def get_post_data(post):
 			# print "NO TIENE comments"
 			pass
 		#################################################################################################################
+		# a part of the 'text' return value
 		if "description" in post.keys():
 			# print 'description: ' + post['description'].encode('utf-8').replace('\n',' ').replace('\r',' ').replace('\t','')
 			text = text + post['description'].encode('utf-8').replace('\n',' ').replace('\r',' ').replace('\t','')
@@ -102,11 +122,7 @@ def get_post_data(post):
 			# print "NO TIENE description"
 			pass
 		#################################################################################################################
-		# if "from" in post.keys():
-			# print 'from: ' + str(post['from']['name'])
-		# else:
-			# print "NO TIENE from"
-		#################################################################################################################
+		# this field is used to create the 'url' return value
 		if "id" in post.keys():
 			# print 'id: ' + str(post['id'])
 			url = "www.facebook.com/" + str(post["id"])
@@ -117,16 +133,7 @@ def get_post_data(post):
 
 		# print ' ----------------------------------------------------------------------------------------------------- '
 
-		# #################################################################################################################
-		# if post['type'] == "link":
-		# 	text = post['name'].encode('utf-8') + post['message'].encode('utf-8').replace('\n',' ').replace('\r',' ').replace('\t','')
-		# elif post['type'] == "photo":
-		# 	text = post['message'].encode('utf-8').replace('\n',' ').replace('\r',' ').replace('\t','')
-		# elif post['type'] == 'video' and 'description' in posts.keys():
-		# 	text = post['description'].encode('utf-8').replace('\n',' ').replace('\r',' ').replace('\t','')
-		# elif post['type'] == "status":
-		# 	return None
-		# #################################################################################################################
+		# returns a dict with the required data
 		return ({"text": text, "url": url, "likes": likes, "shares": shares, "comments": comments, 'created_time': created_time})
 
 	except Exception, e:
@@ -135,50 +142,50 @@ def get_post_data(post):
 		print ' ----------------------------------------------------------------------------------------------------- '
 		return None
 
+# ____________________________________________________________________________________________________________________________________________________
+# Saves a single post in a persistent file or database. Currently a CSV. Adds the 'source' field to the post data
 def save_post_data(data, source, writer):
 	if data != None:
 			print source
 			writer.writerow([source, data['created_time'] ,data["text"], data["url"], data["likes"], data["shares"], data["comments"]])
 
+# _____________________________________________________________________________________________________________________________________________________
+# For each source it retrieves all the posts from the las period of time that is specified by the 'days' variable in configuration_file.py
 def get_facebook_posts():
-	start_time = datetime.datetime.now()
+	start_time = datetime.datetime.now() # a timestamp to measure how long does it take process all sources
 	posts_counter = {} # a dict that counts how many post of each kind are found
-	api_calls_counter = 1 # a counter who keep tracks of how many calls to tha api have benn done
-	graph = facebook.GraphAPI(facebook_access_token)
-	# output_file = open("FacebookResults" + str(datetime.datetime.now()).replace(":", "_") + ".csv", "wb")
-	# writer = csv.writer(output_file)
-	# writer.writerow(["source", "created_time", "text", "url", "likes", "shares","comments"])
+	api_calls_counter = 1 # a counter who keep tracks of how many calls to tha api have been done
+	graph = facebook.GraphAPI(facebook_access_token) # access to facebook api with the access token
 
 
 	for source, page_id in facebook_sources.iteritems():
+		# each source has its own csv file indicating the name of the source, how many days were fetched, and the timestamp
 		output_file = open("FacebookResults_" + source  + '_(' + str(days) + ' dias)_' + str(datetime.datetime.now()).replace(":", "_") + ".csv", "wb")
+		# initialize the csv writer object and write the column headers
 		writer = csv.writer(output_file)
 		writer.writerow(["source", "created_time", "text", "url", "likes", "shares","comments"])
-		# profile = graph.get_object(page_id)
+		# get the first 100 post
 		posts = graph.get_connections(page_id, 'posts', fields="type, name, from, shares, created_time, link, message, description, caption, likes.limit(0).summary(True), comments.limit(0).summary(True)", since=get_since_parameter(days), limit=100)
-		
+		# this loops through the different pages of post until there are no more results (the 'since' date is reached)
 		while True:
 			try:
 				for post in posts['data']:
 					try:
 						data = get_post_data(post)
 						save_post_data(data, source, writer)
+						# increase the counter of post according to the post type
 						if post['type'] not in posts_counter.keys():
+							# the first time a new type of post if found its respective counter
 							posts_counter[post['type']] = 1
 						else:
+							# if it's not the fist time, the counter must be increased
 							posts_counter[post['type']] = posts_counter[post['type']] + 1
 					except Exception, e:
 						print str(e)
-					
-					# data = get_post_data(post)
-					# save_post_data(data, source, writer)
-					# if post['type'] not in posts_counter.keys():
-					# 	posts_counter[post['type']] = 1
-					# else:
-					# 	posts_counter[post['type']] = posts_counter[post['type']] + 1
-			
 				
+				# sleep for a little time for not overloading the api
 				time.sleep(2)
+				# request the next page of posts
 				posts = requests.get(posts['paging']['next']).json()
 				api_calls_counter = api_calls_counter + 1
 
@@ -187,8 +194,8 @@ def get_facebook_posts():
 				# loop and end the script.
 				break
 		output_file.close()
-	# output_file.close()
-	end_time = datetime.datetime.now()
+	
+	end_time = datetime.datetime.now() # timestamp when the program ended
 	elapsed_time = end_time - start_time
 	# print contador
 	print '>>> RESULTADOS <<<'
@@ -201,12 +208,7 @@ def get_facebook_posts():
 	print 'ELAPSED TIME = ' + str(elapsed_time)
 
 
-def debug_failed():
-	graph = facebook.GraphAPI(facebook_access_token)
-	failed_list = ['303614086512550_484797811727509', '313024308746037_991170607598067', '313024308746037_991170514264743', '313024308746037_991167727598355', '313024308746037_991166280931833', '313024308746037_991165470931914', '313024308746037_991165277598600', '313024308746037_990863947628733', '313024308746037_990835270964934', '313024308746037_990188641029597', '313024308746037_990148337700294', '313024308746037_990148134366981', '313024308746037_988782664503528', '313024308746037_988522584529536', '313024308746037_988471321201329', '313024308746037_988465114535283', '313024308746037_988074047907723', '313024308746037_988001884581606', '313024308746037_987996804582114']
-	for post_id in failed_list:
-		post = graph.get_object(post_id, fields="type, name, from, shares, created_time, link, message, description, caption, likes.limit(0).summary(True), comments.limit(0).summary(True)")
-		data = get_post_data(post)
+
 
 
 if __name__ == "__main__":
