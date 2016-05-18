@@ -9,7 +9,7 @@ import urllib
 from tweepy import StreamListener
 from tweepy import OAuthHandler
 from tweepy import Stream
-from bs4 import BeautifulSoup
+# from bs4 import BeautifulSoup
 from configuration_file import tw_access_token, tw_access_secret, tw_consumer_key, tw_consumer_secret, tw_sources
 from lxml import html
 
@@ -105,8 +105,13 @@ def get_twitter_tweets():
 					
 				max_id = t.id
 
+<<<<<<< HEAD
 			# if (count_180 >= 180):
 			# 	time.sleep(2)
+=======
+			if (count_180 >= 180):
+				time.sleep(1)
+>>>>>>> eefb82a283b56bf158cd37c3e831136d97dacd40
 
 		max_id    = -1
 		ban       = 0
