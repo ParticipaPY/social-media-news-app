@@ -105,13 +105,9 @@ def get_twitter_tweets():
 					
 				max_id = t.id
 
-<<<<<<< HEAD
 			# if (count_180 >= 180):
-			# 	time.sleep(2)
-=======
-			if (count_180 >= 180):
-				time.sleep(1)
->>>>>>> eefb82a283b56bf158cd37c3e831136d97dacd40
+			# 	time.sleep(1)
+
 
 		max_id    = -1
 		ban       = 0
