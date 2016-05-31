@@ -68,7 +68,7 @@ def get_twitter_tweets():
 	ban       = 0
 	max_tweet = 0
 	now_UTC   = datetime.datetime.utcnow()
-	max_delta = datetime.timedelta(days=180)
+	max_delta = datetime.timedelta(days=365)
 
 	auth      = tweepy.OAuthHandler(tw_consumer_key, tw_consumer_secret)
 	auth.set_access_token(tw_access_token, tw_access_secret)
