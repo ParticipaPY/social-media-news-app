@@ -1,0 +1,42 @@
+{
+   "document" : [
+          
+          { 
+            "reference": "politica",
+            "title": "Política",
+            "content": "Política, Partido, Partidos, Diputado, Diputados, Senado, Senador, Senadores, Presidente, ANR, Colorado, Liberal, PLRA, Frente Guazu, Lugo, Nicanor, Cartes, Elecciones, Votación, Estado, Gobierno, Intendente, Intendentes, Consejal, Consejales",
+            "booleanrestriction" : "partido* DNEAR2 (político* OR \"anr\" OR \"colorado\" OR \"liberal\" OR \"plra\"), diputad*, senado*, presiden*, \"Lugo\", \"Nicanor\", \"Cartes\", frente DNEAR1 guazu, eleccion* BEFORE (presidencial* OR municipal* OR interna*), intendent*, consejal*, votación, gobierno"
+          },
+          { 
+            "reference": "corrupcion",
+            "title": "Corrupción",
+            "content": "Corrupcion, Robo, Malversación, Lavado, Licitación, Desvio de Fondos, Fondos Públicos, FONACIDE, Royalties, Fondos, Delitos Económicos, Delito Económico, Cargo de Confianza, Secretaria Privada, Vales de Combustible, Recaudación",
+            "booleanrestriction": "\"corrupción\", (malversación OR desvío OR robo) DNEAR2 ((fondo* OR dinero) BEFORE (estado OR público)), delito* DNEAR1 económico*, \"cargo de confianza\", \"secretaria privada\", \"vales de combustible\", recaudaci*, \"lavado\" DNEAR1 \"dinero\", \"FONACIDE\", \"royalties\", licitaci*, \"enriquecimiento ilícito\", planiller*"
+          },
+          { 
+            "reference": "economia",
+            "title": "Economía",
+            "content": "Inflación, PIB, Crecimiento, Deuda, Deudas, Bonos, Bono, Hacienda, Presupuesto, Presupuestos, Impuesto, Impuestos, SET, Tributación, IVA, Pobreza, Soja, Carne, Exportación, Importación, Aduana, Recaudación, Sector Público, Sector Privado.",
+            "booleanrestriction" : "\"inflación\", \"~PIB\", deuda*, bono*, \"hacienda\", presupuest*, impuesto*, \"SET\", \"IVA\", tributación, pobre*, (importación OR exportación) BEFORE (carne OR soja), aduana*, recauda*, \"sector\" BEFORE (\"público\" OR \"privado\"), (crecimiento OR aumento) BEFORE (\"inflación\" OR \"~PIB\", deuda*, presupuest*, impuesto*, pobre*, importación, exportación, recauda*)"
+          },
+          { 
+            "reference": "ciudad",
+            "title": "Ciudad",
+            "content": "Ciudad, Bache, Baches Cuidacoches, Cuida Coches, Limpiavidrios, Limpia Vidrios, Estacionamiento, Vereda, Alcantarillado, ANDE, ESSAP, Raudal, Basura, Recolección de Basura, Obra, Viaducto, Recapado, Asfaltado, Empedrado, embotellamiento, vehicular",
+            "booleanrestriction": "\"ciudad\", bache*, cuidacoche*, \"cuida\" BEFORE coche*, limpiavidrio*, \"limpia\" BEFORE vidrio*, estacionamiento*, verda*, \"alcantarillado\", \"ANDE\", \"ESSAP\", raudal*, \"recolección\" BEFORE \"basura\", basur*, obra* PARAGRAPH (\"viaducto\" OR \"racapado\" OR \"aslfaltado\", \"empedrado\", \"ciudad\"), empedrado*, asfalt*, semáfor*, embotellamiento*, vehicul* "
+          },
+          { 
+            "reference": "conflictos_sociales",
+            "title": "Conflictos Sociales",
+            "content": "Cuida Coches,  Cuidacoches, Limpiavidrios, Limpia Vidrios, Campesinos, Soja,  Sin Techos, Sindicalistas, Huelga, Manifestacion, Estudiantes, Movilización, Pobreza, Desigualdad, derechos, bloqueos, cierres, marchas, reclamos, cooperativista, transportistas",
+            "booleanrestriction": " (cuidacoche* OR (\"cuida\" BEFORE coche*) OR limpiavidrio* OR (\"limpia\" BEFORE vidrio*) OR campesin* OR \"sin techo\" OR \"sin techos\" OR sindica* OR estudiant* OR cooperativ* OR transportista* OR \"desigualdad\" OR pobre*) AND (movilazaci* OR huelga* OR manifestaci* OR bloqueo OR cierres OR marchas OR reclamos), \"soja\", derecho*"
+          },
+          { 
+            "reference": "educacion",
+            "title": "Educación",
+            "content": "Ministerio de Educación, Estudiantes, Profesores, Maestros, reforma educativa, ministro de educación",
+            "booleanrestriction": " (\"ministerio\" OR ministr*) DNEAR1 \"educación\", estudiant*, profesor*, maestr*, \"reforma educativa\""
+          }
+
+          ]
+        }

@@ -1,0 +1,41 @@
+{
+   "document" : [
+          
+          { 
+            "reference": "politica",
+            "title": "Política",
+            "content": "Política, Partido, Partidos, Diputado, Diputados, Senado, Senador, Senadores, Presidente, ANR, Colorado, Liberal, PLRA, Frente Guazu, Lugo, Nicanor, Cartes, Elecciones, Votación, Estado, Gobierno, Intendente, Intendentes, Consejal, Consejales, decretos, leyes, juicio político",
+            "booleanrestriction" : "(partid* DNEAR2 (político* OR \"anr\" OR \"colorado\" OR \"liberal\" OR \"plra\")) OR (diputad*) OR ( senado*) OR ( presiden*) OR ( \"Lugo\") OR ( \"Nicanor\") OR ( \"Cartes\") OR (\"frente guazú\") OR (\"anr\") OR (\"plra\") OR ( elecci* BEFORE (presidencial* OR municipal* OR interna*)) OR ( intendent*) OR ( consejal*) OR (votación) OR (gobierno) OR \"ley\" OR \"leyes\" OR decret* OR \"juicio político\" OR \"golpe de estado\" "
+          },
+          { 
+            "reference": "corrupcion",
+            "title": "Corrupción",
+            "content": "Corrupcion, Robo, Malversación, Lavado, Licitación, Desvio de Fondos, Fondos Públicos, FONACIDE, Royalties, Fondos, Delitos Económicos, Delito Económico, Cargo de Confianza, Secretaria Privada, Vales de Combustible, Recaudación",
+            "booleanrestriction": "(\"corrupción\") OR ( (malversación OR desvío OR robo) DNEAR2 (fondo* OR dinero)) OR ((fondo* OR \"dinero\") DNEAR2 (\"estado\", estatal*, público* )) OR ( delito* DNEAR1 económico*) OR ( \"cargo de confianza\") OR ( \"secretaria privada\") OR ( \"vales de combustible\") OR ( recaudaci*) OR ( \"lavado\" DNEAR1 \"dinero\") OR ( \"FONACIDE\") OR ( \"royalties\") OR ( licitaci*) OR ( \"enriquecimiento ilícito\") OR ( planiller*)"
+          },
+          { 
+            "reference": "economia",
+            "title": "Economía",
+            "content": "Inflación, PIB, Crecimiento, Deuda, Deudas, Bonos, Bono, Hacienda, Presupuesto, Presupuestos, Impuesto, Impuestos, SET, Tributación, IVA, Pobreza, Soja, Carne, Exportación, Importación, Aduana, Recaudación, Sector Público, Sector Privado.",
+            "booleanrestriction" : "(\"inflación\") OR ( \"~PIB\") OR ( deuda*) OR ( bono*) OR ( \"hacienda\") OR ( presupuest* AND (\"general\" OR \"estatal\" OR \"estado\" OR gasto*)) OR ( impuesto*) OR ( \"SET\") OR ( \"IVA\") OR ( tributación) OR ( pobre*) OR  importaci* OR importad* OR ( (importaci* OR importad* OR exporta* ) AND (carne OR soja)) OR ( aduana*) OR ( recauda*) OR ( \"sector\" BEFORE (\"público\" OR \"privado\")) OR ( (crecimiento OR aumento) BEFORE \"inflación\" OR \"~PIB\" OR deuda* OR presupuest* OR  impuesto* OR pobre* OR importaci* OR export* OR recauda* )"
+          },
+          { 
+            "reference": "ciudad",
+            "title": "Ciudad",
+            "content": "Ciudad, Bache, Baches Cuidacoches, Cuida Coches, Limpiavidrios, Limpia Vidrios, Estacionamiento, Vereda, Alcantarillado, ANDE, ESSAP, Raudal, Basura, Recolección de Basura, Obra, Viaducto, Recapado, Asfaltado, Empedrado, embotellamiento, vehicular",
+            "booleanrestriction": "(\"ciudad\") OR ( bache*) OR ( cuidacoche*) OR ( \"cuida\" BEFORE coche*) OR ( limpiavidrio*) OR ( \"limpia\" BEFORE vidrio*) OR ( estacionamiento*) OR ( vereda*) OR ( \"alcantarillado\") OR ( \"ANDE\") OR ( \"ESSAP\") OR ( raudal*) OR ( \"recolección\" BEFORE \"basura\") OR ( basur*) OR ( obra* PARAGRAPH (\"viaducto\" OR \"racapado\" OR \"aslfaltado\") OR ( \"empedrado\") OR (ciudad*)) OR ( empedrado*) OR ( asfalt*) OR ( semáfor*) OR ( embotellamiento*) OR ( vehicul*) AND NOT (movilazaci* OR huelga* OR manifestaci* OR bloqueo OR cierres OR marchas )) "
+          },
+          { 
+            "reference": "conflictos_sociales",
+            "title": "Conflictos Sociales",
+            "content": "Cuida Coches,  Cuidacoches, Limpiavidrios, Limpia Vidrios, Campesinos, Soja,  Sin Techos, Sindicalistas, Huelga, Manifestacion, Estudiantes, Movilización, Pobreza, Desigualdad, derechos, bloqueos, cierres, marchas, reclamos, cooperativista, transportistas",
+            "booleanrestriction": "((cuidacoche* OR (\"cuida\" BEFORE coche*) OR limpiavidrio* OR (\"limpia\" BEFORE vidrio*) OR campesin* OR \"sin techo\" OR \"sin techos\" OR sindica* OR estudiant* OR cooperativ* OR transportista* OR \"desigualdad\" OR pobre*) AND (movilazaci* OR huelga* OR manifestaci* OR bloqueo OR cierres OR marchas OR reclam* OR exigen*)) OR movilazaci* OR huelga* OR manifestaci* OR bloqueo OR cierres OR marchas OR reclam* OR exigen* OR  \"soja\" OR derecho*"
+          },
+          { 
+            "reference": "educacion",
+            "title": "Educación",
+            "content": "Ministerio de Educación, Estudiantes, Profesores, Maestros, reforma educativa, ministro de educación",
+            "booleanrestriction": "((\"ministerio\" OR ministr*) DNEAR1 \"educación\") OR ( estudiant*) OR ( profesor*) OR ( maestr*) OR ( \"reforma educativa\")"
+          }
+          ]
+        }

@@ -10,7 +10,7 @@ def save_facebook_posts():
 	c = conn.cursor()
 	# conn.close()
 	# c.execute("DROP TABLE IF EXISTS facebook_results;")
-	c.execute("CREATE TABLE facebook_result (id INTEGER PRIMARY KEY, source TEXT, timestamp DATETIME, content TEXT, url TEXT, likes INTEGER, shares INTEGER, comments INTEGER);")
+	c.execute("CREATE TABLE facebook_result (id INTEGER PRIMARY KEY, source TEXT, timestamp DATETIME, content TEXT, url TEXT, likes INTEGER, shares INTEGER, comments INTEGER, category TEXT);")
 	results = os.listdir('../results/facebook_results')
 	current_id = 0
 	for result in results:
@@ -43,7 +43,7 @@ def save_twitter_posts():
 	c = conn.cursor()
 	# conn.close()
 	# c.execute("DROP TABLE IF EXISTS facebook_results;")
-	c.execute("CREATE TABLE twitter_results (id INTEGER PRIMARY KEY, source TEXT, timestamp DATETIME, content TEXT, url TEXT, favs INTEGER, retweets INTEGER, comments INTEGER);")
+	c.execute("CREATE TABLE twitter_result (id INTEGER PRIMARY KEY, source TEXT, timestamp DATETIME, content TEXT, url TEXT, favs INTEGER, retweets INTEGER, comments INTEGER, category TEXT);")
 	results = os.listdir('../results/twitter_results')
 	current_id = 0
 	for result in results:
@@ -56,7 +56,7 @@ def save_twitter_posts():
 				continue
 			timestamp = row[1]
 			content = row[2].replace('\"', '\'')
-			query = "INSERT INTO twitter_results (id, source, timestamp, content, url, favs, retweets, comments) VALUES (" + str(current_id) + ",\"" + row[0] + " (Twitter)\",\"" + str(timestamp) + "\",\"" + content + "\",\"" + row[3] + "\"," + row[4] + "," + row[5] + "," +  row[6] + ");"
+			query = "INSERT INTO twitter_result (id, source, timestamp, content, url, favs, retweets, comments) VALUES (" + str(current_id) + ",\"" + row[0] + " (Twitter)\",\"" + str(timestamp) + "\",\"" + content + "\",\"" + row[3] + "\"," + row[4] + "," + row[5] + "," +  row[6] + ");"
 			try:
 				c.execute(query)
 				current_id = current_id + 1
