@@ -10,7 +10,7 @@ from tweepy import StreamListener
 from tweepy import OAuthHandler
 from tweepy import Stream
 # from bs4 import BeautifulSoup
-from configuration_file import tw_access_token, tw_access_secret, tw_consumer_key, tw_consumer_secret, tw_sources
+from configuration_file import tw_access_token, tw_access_secret, tw_consumer_key, tw_consumer_secret, tw_sources, days
 from lxml import html
 
 
@@ -68,7 +68,7 @@ def get_twitter_tweets():
 	ban       = 0
 	max_tweet = 0
 	now_UTC   = datetime.datetime.utcnow()
-	max_delta = datetime.timedelta(days=365)
+	max_delta = datetime.timedelta(days)
 
 	auth      = tweepy.OAuthHandler(tw_consumer_key, tw_consumer_secret)
 	auth.set_access_token(tw_access_token, tw_access_secret)
@@ -77,7 +77,7 @@ def get_twitter_tweets():
 
 
 	for source, page_id in tw_sources.iteritems():
-		output_file = open("TwitterResults_" + source  + '_(' + str(186) + ' days)_' + str(datetime.datetime.now()).replace(":", "_") + ".csv", "wb")
+		output_file = open("TwitterResults_" + source  + '_(' + str(days) + ' days)_' + str(datetime.datetime.now()).replace(":", "_") + ".csv", "wb")
 		writer 		= csv.writer(output_file)
 		writer.writerow(['Source', 'Date', 'Text', 'URL', 'Favorites', 'Retweets', 'Replies'])
 		while(True):

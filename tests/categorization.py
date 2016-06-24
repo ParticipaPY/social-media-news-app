@@ -6,12 +6,13 @@ import time
 from havenondemand.hodclient import *
 
 
-API_KEY = '366a4602-d8f6-4716-8cc6-b65036fb26a2'
+# API_KEY = '366a4602-d8f6-4716-8cc6-b65036fb26a2'
+API_KEY = 'd9cc78bd-b6a9-4bb6-84bc-cfb64d56fead'
 
 def categorize(text, client):
 	# if text is False:
 	# 	raise ValueError('No text given to categorize')
-	response = client.get_request({'text': text, "index": "categorias_noticias"}, HODApps.CATEGORIZE_DOCUMENT, async=False)
+	response = client.get_request({'text': text, "index": "categorization"}, HODApps.CATEGORIZE_DOCUMENT, async=False)
 	
 	category = "NO CATEGORY"
 	try: 
