@@ -1,4 +1,6 @@
 facebook
+results
+tests
 configuration_file.py
 configuration_file.pyc
 tests/social_network_posts.db
